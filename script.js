@@ -1,6 +1,6 @@
 let presentDay = new Date().getDay()
 let presentHour = new Date().getHours()
-let presentTime = new Date().toLocaleTimeString('en')
+let presentTime = new Date().toLocaleDateString('ru')
 let dateNow = new Date().getTime()
 let newYear = new Date('2023-01-01').getTime()
 let timeRemaining = Math.floor((newYear - dateNow) / 1000)
