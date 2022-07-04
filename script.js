@@ -1,57 +1,59 @@
-let presentDay = new Date().getDay()
-let presentHour = new Date().getHours()
-let presentTime = new Date().toLocaleDateString('ru')
-let dateNow = new Date().getTime()
-let newYear = new Date('2023-01-01').getTime()
-let timeRemaining = Math.floor((newYear - dateNow) / 1000)
-let days = Math.floor(timeRemaining / 60 / 60 / 24)
-
-
 
 const goodTime = document.createElement('div')
 const day = document.createElement('div')
 const time = document.createElement('div')
 const divNewYear = document.createElement('div')
 
-const showResult = (hour) => {
-    let newGootTime = ['Доброе утро', 'Добрый день', 'Добрый вечер', 'Доброй ночи']; 
+const updateDate = () => {
+   
+        const presentDay = new Date()
+        const nowData = new Date().getDay()
+        const presentHour = new Date().getHours()
+        const presentTime = new Date().toLocaleTimeString('ru');
+        const dateNow = new Date().getTime()
+        const newYear = new Date(presentDay.getFullYear() + 1, 0, 1);
+        
+        const timeRemaining = Math.floor((newYear - dateNow) / 1000)
+        
+        const days = Math.floor(timeRemaining / 60 / 60 / 24)
+        let message = '';
 
-    if (hour >= 0 || hour <= 5) {
-        return newGootTime[3];
+
+        if (presentHour > 23 || presentHour < 7) {
+            message = 'Доброй ночи!';
+          } else if (presentHour > 6 && presentHour < 12) {
+            message = 'Доброе утро!';
+          } else if (presentHour > 11 && presentHour < 19) {
+            message = 'Добрый день!';
+          } else if (presentHour > 18 && presentHour < 24) {
+            message = 'Добрый вечер!';
+          }
+
+
+    const dayWeek = (index) => {
+        let days = ['Воскресение', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']; 
+        return days[index]; 
     }
-
-    if (hour >= 6 || hour <= 11) {
-        return newGootTime[0];
-    }
-
-    if (hour >= 12 || hour <= 18) {
-        return newGootTime[2];
-    }
-
-    if (hour >= 19 || hour <= 23) {
-        return newGootTime[1];
-    }
-
+    
+    goodTime.className = 'good-time'
+    goodTime.textContent = message;
+    document.body.appendChild(goodTime);
+    
+    day.className = 'day'
+    day.textContent = `Сегодня: ${(dayWeek(nowData))}`
+    document.body.appendChild(day)
+    
+    time.className = 'time'
+    time.textContent = `Текущее время: ${presentTime}`
+    document.body.appendChild(time)
+    
+    divNewYear.className = 'new-year'
+    divNewYear.textContent = `До нового года: ${days} дней`
+    document.body.appendChild(divNewYear)
 }
 
-const dayWeek = (index) => {
-    let days = ['Воскресение', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']; 
-    return days[index]; 
-}
+setInterval(updateDate, 1000)
 
-goodTime.className = 'good-time'
-goodTime.textContent = (showResult(presentHour));
-document.body.appendChild(goodTime);
 
-day.className = 'day'
-day.textContent = `Сегодня: ${(dayWeek(presentDay))}`
-document.body.appendChild(day)
 
-time.className = 'time'
-time.textContent = `Текущее время: ${presentTime}`
-document.body.appendChild(time)
-
-divNewYear.className = 'new-year'
-divNewYear.textContent = `До нового года: ${days} дней`
-document.body.appendChild(divNewYear)
 
